@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps Integration</title>
+    <style>
+        #map {
+            height: 500px; /* Set the height of the map */
+            width: 100%;   /* Set the width of the map */
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Maps Integration </h1>
+    <div id="map"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD2m8DfAvCFYZ7wfxE66hami_7A6piK0g&callback=initMap" async defer></script>
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of VNIT
+            const vnit = { lat: 21.1458, lng: 79.0882 };
+            // The map, centered at VNIT
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: vnit,
+            });
+            // The marker, positioned at VNIT
+            const marker = new google.maps.Marker({
+                position: vnit,
+                map: map,
+                title: "VNIT",
+                icon: {
+                    url: "https://i.imgur.com/EhsgH9D.jpeg", // Replace with your custom icon URL
+                    scaledSize: new google.maps.Size(500, 500), // Adjust icon size
+                },
+            });
+            // Add click event listener to the marker
+            marker.addListener('click', () => {
+                const infoWindow = new google.maps.InfoWindow({
+                    content: "<h4>Welcome to VNIT!</h4>",
+                });
+                infoWindow.open(map, marker);
+            });
+
+            // Add dynamic marker on map click
+            map.addListener('click', (event) => {
+                new google.maps.Marker({
+                    position: event.latLng,
+                    map: map,
+                    title: "Dynamic Marker",
+                });
+            });
+        }
+    </script>
+</body>
+</html>
